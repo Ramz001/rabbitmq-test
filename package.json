@@ -8,7 +8,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "publisher": "node ./src/publisher.js",
     "consumer": "node ./src/consumer.js",
-    "consumer-cli": "node ./src/consumer-cli.js"
+    "publisher-cli": "node ./src/publisher-cli.js"
   },
   "keywords": [],
   "author": "",
