@@ -1,13 +1,8 @@
 import amqp from "amqplib";
 import "dotenv/config";
-import fs from "fs";
+import fs from "fs/promises";
 import path from "path";
-
-export async function ensureDirectoryExists(dirPath) {
-  if (!fs.existsSync(dirPath)) {
-    fs.mkdirSync(dirPath, { recursive: true });
-  }
-}
+import { ensureDirectoryExists, sleep, sanitizeFilename } from "./utils.js";
 
 async function connect() {
   try {
@@ -15,6 +10,7 @@ async function connect() {
     const connection = await amqp.connect(process.env.RABBITMQ_URI);
     const channel = await connection.createChannel();
     await channel.assertQueue("jobs");
+    await channel.prefetch(1);
 
     console.info("Waiting for messages in 'jobs' queue...");
     channel.consume("jobs", async (msg) => {
@@ -28,19 +24,20 @@ async function connect() {
         process.cwd(),
         "output",
         String(json?.id) || "unknown",
-        `${json?.name || "unknown"}.json`,
+        `${sanitizeFilename(json?.name || "unknown")}.json`,
       );
 
       await ensureDirectoryExists(path.dirname(filePath));
 
-      fs.writeFile(filePath, content, (err) => {
+      await sleep(10000);
+
+      await fs.writeFile(filePath, content, (err) => {
         if (err) {
-          console.error("Error writing file:", err);
           throw err;
-        } else {
-          console.log(`File saved: ${filePath}`);
         }
       });
+
+      console.info(`Job done: ${json.id}`);
       channel.ack(msg);
     });
   } catch (error) {

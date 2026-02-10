@@ -1,6 +1,6 @@
 import amqp from "amqplib";
 import "dotenv/config";
-import { faker } from '@faker-js/faker';
+import { faker } from "@faker-js/faker";
 
 const message = {
   id: faker.number.int(),
