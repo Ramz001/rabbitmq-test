@@ -1,4 +1,5 @@
 import amqp from "amqplib";
+import 'dotenv/config'
 
 const message = {
   id: 1,
@@ -8,7 +9,8 @@ const message = {
 
 async function connect() {
   try {
-    const connection = await amqp.connect("amqp://localhost:5672");
+    console.log('Connecting to RabbitMQ...', process.env.RABBITMQ_URI);
+    const connection = await amqp.connect(process.env.RABBITMQ_URI);
     const channel = await connection.createChannel();
     const result = await channel.assertQueue("jobs");
     channel.sendToQueue("jobs", Buffer.from(JSON.stringify(message)));
@@ -17,3 +19,5 @@ async function connect() {
     console.error(error);
   }
 }
+
+connect();

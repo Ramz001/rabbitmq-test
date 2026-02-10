@@ -11,6 +11,9 @@ importers:
       amqplib:
         specifier: ^0.10.9
         version: 0.10.9
+      dotenv:
+        specifier: ^17.2.4
+        version: 17.2.4
 
 packages:
 
@@ -20,6 +23,10 @@ packages:
 
   buffer-more-ints@1.0.0:
     resolution: {integrity: sha512-EMetuGFz5SLsT0QTnXzINh4Ksr+oo4i+UGTXEshiGCQWnsgSs7ZhJ8fzlwQ+OzEMs0MpDAMr1hxnblp5a4vcHg==}
+
+  dotenv@17.2.4:
+    resolution: {integrity: sha512-mudtfb4zRB4bVvdj0xRo+e6duH1csJRM8IukBqfTRvHotn9+LBXB8ynAidP9zHqoRC/fsllXgk4kCKlR21fIhw==}
+    engines: {node: '>=12'}
 
   querystringify@2.2.0:
     resolution: {integrity: sha512-FIqgj2EUvTa7R50u0rGsyTftzjYmv/a3hO345bZNrqabNqjtgiDMgmo4mkUjd+nzU5oF3dClKqFIPUKybUyqoQ==}
@@ -38,6 +45,8 @@ snapshots:
       url-parse: 1.5.10
 
   buffer-more-ints@1.0.0: {}
+
+  dotenv@17.2.4: {}
 
   querystringify@2.2.0: {}
 
